@@ -20,20 +20,7 @@ public class Logger extends Main {
         super.setActivityTitle(getString(R.string.logger));
         setContentView(R.layout.activity_logger);
 
-        try {
-            FileInputStream mInput = openFileInput(FILENAME);
-            byte[] data = new byte[128];
-            mInput.read(data);
-            mInput.close();
 
-            String display = new String(data);
-            TextView tv = (TextView)findViewById(R.id.text);
-            tv.setText(display.trim());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

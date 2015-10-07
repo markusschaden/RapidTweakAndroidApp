@@ -27,7 +27,7 @@ public class RapidTweakWebSocketClient extends WebSocketClient {
     private Context context;
 
     public RapidTweakWebSocketClient(Context context) throws URISyntaxException {
-        super(new URI("ws://152.96.237.145:10500"), new Draft_17());
+        super(new URI("ws://10.0.2.2:10500"), new Draft_17());
 
         this.context = context;
         connect();
@@ -50,8 +50,8 @@ public class RapidTweakWebSocketClient extends WebSocketClient {
 
                 Log.i("Message", rawMessage.toString());
                 if(clazz == MonitoringMessage.class) {
-                    Intent intent = new Intent(context, MonitoringMessage.class);
-                    intent.putExtra("MonitoringMEssage", rawMessage);
+                    Intent intent = new Intent(context, MonitoringMessageService.class);
+                    intent.putExtra("MonitoringMessage", rawMessage);
                     context.startService(intent);
                 }
 

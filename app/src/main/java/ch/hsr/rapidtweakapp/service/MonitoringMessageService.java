@@ -1,23 +1,23 @@
 package ch.hsr.rapidtweakapp.service;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.common.util.concurrent.Monitor;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.MonitoringMessage;
-import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.TrackElement;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.LeftCurveTrackElement;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.RightCurveTrackElement;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElement;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.StraightTrackElement;
 
 import ch.hsr.rapidtweakapp.Application;
 import ch.hsr.rapidtweakapp.domain.TrackElements;
+import ch.hsr.rapidtweakapp.helper.IVisitor;
 
-public class MonitoringMessageService extends IntentService {
+public class MonitoringMessageService extends IntentService implements IVisitor{
+    private TrackElements race;
 
     public MonitoringMessageService(){
         super("MonitoringMessageService");
@@ -26,12 +26,42 @@ public class MonitoringMessageService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        MonitoringMessage message;
-        TrackElements race = ((Application)this.getApplication()).getRace();
-        if(extras != null) {
-            message = (MonitoringMessage)extras.get("MonitoringMessage");
-            race.add((TrackElement) message.getElement());
+        Element element;
+        race = ((Application)this.getApplication()).getRace();
+        if(extras.getSerializable("MonitoringMessage") != null) {
+            MonitoringMessage message = (MonitoringMessage) (extras.getSerializable("MonitoringMessage"));
+            try {
+                element = message.getElement();
+            }
+            catch (NullPointerException e) {
+                Log.e("MonitoringMessage", "No Element in Message");
+                return;
+            }
+            element.accept(this);
         }
-        Log.i("RaceElements", race.toString());
+    }
+
+
+    @Override
+    public void visitStraight(StraightTrackElement element) {
+        race.add(element);
+        Log.i("TrackElementAdded", element.getElementName());
+    }
+
+    @Override
+    public void visitLeft(LeftCurveTrackElement element) {
+        race.add(element);
+        Log.i("TrackElementAdded", element.getElementName());
+    }
+
+    @Override
+    public void visitRight(RightCurveTrackElement element) {
+        race.add(element);
+        Log.i("TrackElementAdded", element.getElementName());
+    }
+
+    @Override
+    public void visitSpeed(SpeedMeasureTrackElement element) {
+        Log.i("TrackElementAdded", element.getElementName());
     }
 }

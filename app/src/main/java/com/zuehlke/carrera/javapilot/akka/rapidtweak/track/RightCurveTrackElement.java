@@ -1,5 +1,7 @@
 package com.zuehlke.carrera.javapilot.akka.rapidtweak.track;
 
+import ch.hsr.rapidtweakapp.helper.IVisitee;
+import ch.hsr.rapidtweakapp.helper.IVisitor;
 import lombok.Data;
 import lombok.ToString;
 
@@ -8,7 +10,7 @@ import lombok.ToString;
  */
 @Data
 @ToString(callSuper = true)
-public class RightCurveTrackElement extends TrackElement {
+public class RightCurveTrackElement extends TrackElement implements IVisitee {
 
     private final static String ELEMENT_NAME = "Right curve ";
     //TODO: reset on new start
@@ -17,5 +19,10 @@ public class RightCurveTrackElement extends TrackElement {
     @Override
     public String getTrackName() {
         return ELEMENT_NAME + elementCounter++;
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visitRight(this);
     }
 }
