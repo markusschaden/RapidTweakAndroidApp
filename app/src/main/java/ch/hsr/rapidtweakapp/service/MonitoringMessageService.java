@@ -3,6 +3,7 @@ package ch.hsr.rapidtweakapp.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.MonitoringMessage;
@@ -30,7 +31,6 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
         Element element;
         race = ((Application)this.getApplication()).getRace();
         if(extras.getSerializable("MonitoringMessage") != null) {
-            Log.i("Service", "Got Intent Extras" );
             MonitoringMessage message = (MonitoringMessage) (extras.getSerializable("MonitoringMessage"));
             element = message.getElement();
             element.accept(this);
@@ -41,23 +41,31 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
     @Override
     public void visitStraight(StraightTrackElement element) {
         race.add(element);
+        sendMessage();
         Log.i("TrackElementAdded", element.getElementName());
     }
 
     @Override
     public void visitLeft(LeftCurveTrackElement element) {
         race.add(element);
+        sendMessage();
         Log.i("TrackElementAdded", element.getElementName());
     }
 
     @Override
     public void visitRight(RightCurveTrackElement element) {
         race.add(element);
+        sendMessage();
         Log.i("TrackElementAdded", element.getElementName());
     }
 
     @Override
     public void visitSpeed(SpeedMeasureTrackElement element) {
         Log.i("TrackElementAdded", element.getElementName());
+    }
+
+    private void sendMessage() {
+        Intent intent = new Intent("raceChanged");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
