@@ -17,10 +17,8 @@ import java.util.Observable;
 public abstract class Element extends Observable implements Serializable, IVisitee{
 
     protected Multimap<Integer, Long> positions = ArrayListMultimap.create();
-    private String elementName;
-
-    public abstract String getTrackName();
-    public abstract void accept(IVisitor visitor);
+    String elementName;
+    private int id;
 
     public Double getAveragePosition(int power) {
 
@@ -58,6 +56,5 @@ public abstract class Element extends Observable implements Serializable, IVisit
 
         return result / count;
     }
-
 
 }

@@ -13,6 +13,7 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElem
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.StraightTrackElement;
 
 import ch.hsr.rapidtweakapp.Application;
+import ch.hsr.rapidtweakapp.activities.TrackElementsActivity;
 import ch.hsr.rapidtweakapp.domain.TrackElements;
 import ch.hsr.rapidtweakapp.helper.IVisitor;
 
@@ -29,14 +30,9 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
         Element element;
         race = ((Application)this.getApplication()).getRace();
         if(extras.getSerializable("MonitoringMessage") != null) {
+            Log.i("Service", "Got Intent Extras" );
             MonitoringMessage message = (MonitoringMessage) (extras.getSerializable("MonitoringMessage"));
-            try {
-                element = message.getElement();
-            }
-            catch (NullPointerException e) {
-                Log.e("MonitoringMessage", "No Element in Message");
-                return;
-            }
+            element = message.getElement();
             element.accept(this);
         }
     }

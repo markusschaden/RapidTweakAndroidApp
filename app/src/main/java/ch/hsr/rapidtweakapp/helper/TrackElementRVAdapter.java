@@ -31,9 +31,9 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
     @Override
     public void onBindViewHolder(TrackElementViewHolder holder, int position) {
         final TrackElement trackElement = dataset.get(position);
-        holder.title.setText(trackElement.getTrackName());
-        holder.best.setText("Best: "+trackElement.getAverageDuration(100));
-        holder.last.setText("Best: "+trackElement.getAverageDuration(100));
+        holder.title.setText(trackElement.getElementName());
+        holder.best.setText("Best: "+trackElement.getLatestDuration());
+        holder.last.setText("Last: "+trackElement.getLatestDuration());
     }
 
     @Override

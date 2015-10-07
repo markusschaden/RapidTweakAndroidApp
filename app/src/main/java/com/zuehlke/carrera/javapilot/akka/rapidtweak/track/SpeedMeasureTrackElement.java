@@ -16,15 +16,8 @@ import lombok.ToString;
 public class SpeedMeasureTrackElement extends Element implements IVisitee{
 
     protected Multimap<Integer, Double> speeds = ArrayListMultimap.create();
-    private final static String ELEMENT_NAME = "SpeedMeasure ";
-    private static int elementCounter = 1;
     private double speedLimit;
-    private String id;
-
-    @Override
-    public String getTrackName() {
-        return ELEMENT_NAME + elementCounter++;
-    }
+    private String sourceId;
 
     public Double getAveragePosition(int power) {
 
