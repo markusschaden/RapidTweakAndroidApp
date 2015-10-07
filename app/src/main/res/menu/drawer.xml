@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_track"
+            android:title="@string/track" />
+        <item
+            android:id="@+id/navigation_item_track_elements"
+            android:title="@string/track_elements" />
+    </group>
+
+    <item android:title="@string/config">
+        <menu>
+            <item
+                android:id="@+id/navigation_item_login"
+                android:icon="@drawable/ic_input_black_24dp"
+                android:title="@string/login" />
+            <item
+                android:id="@+id/navigation_item_set_server"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/set_server" />
+            <item
+                android:id="@+id/navigation_item_logger"
+                android:title="@string/logger"/>
+        </menu>
+    </item>
+</menu>
