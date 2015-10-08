@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 
@@ -50,14 +52,18 @@ public class TrackElementsActivity extends Main  {
         public void onReceive(Context context, Intent intent) {
             //Log.i("Broadcast", "Received");
             RaceChange changeType = (RaceChange)intent.getSerializableExtra("changeType");
-            int position = intent.getIntExtra("position", 0);
-            switch (changeType) {
-                case ADD:
-                    onDataAdd(position);
-                    break;
-                case UPDATE:
-                    onDataUpdate(position);
-                    break;
+            int position = intent.getIntExtra("position", -1);
+            if(position != -1) {
+                switch (changeType) {
+                    case ADD:
+                        onDataAdd(position);
+                        break;
+                    case UPDATE:
+                        onDataUpdate(position);
+                        break;
+                }
+            } else {
+                Log.w("TrackElements", "position missing");
             }
         }
     };
@@ -67,5 +73,7 @@ public class TrackElementsActivity extends Main  {
     }
     public void onDataUpdate(int position) {
         rv.getAdapter().notifyItemChanged(position);
+
     }
+
 }

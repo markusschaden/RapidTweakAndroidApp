@@ -78,6 +78,13 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
 
     @Override
     public void visitSpeed(SpeedMeasureTrackElement element) {
+        if(race.getSize() > element.getId()) {
+            race.update(element);
+            sendMessage(RaceChange.UPDATE, element.getId());
+        } else {
+            race.add(element);
+            sendMessage(RaceChange.ADD, element.getId());
+        }
         Log.i("TrackElementAdded", element.getElementName());
     }
 

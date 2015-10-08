@@ -5,6 +5,8 @@
     card_view:cardUseCompatPadding="true"
     android:id="@+id/card_track_element">
     <LinearLayout
+
+        android:id="@+id/track_element_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
@@ -39,6 +41,45 @@
                 android:layout_below="@+id/track_title"
                 android:layout_alignRight="@+id/track_title"
                 android:layout_alignEnd="@+id/track_title" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/speed_element_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/speed_element_image"
+            android:background="@drawable/ic_speed"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/speed_element_id"
+                android:text="Title"
+                android:textSize="30sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/speed_element_speed"
+                android:text="Speed:"
+                android:layout_below="@id/speed_element_id"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/speed_element_maxSpeed"
+                android:text="Max Speed:"
+                android:layout_below="@+id/speed_element_id"
+                android:layout_alignRight="@+id/speed_element_id"
+                android:layout_alignEnd="@+id/speed_element_id" />
         </RelativeLayout>
     </LinearLayout>
 
