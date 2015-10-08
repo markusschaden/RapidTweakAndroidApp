@@ -17,6 +17,7 @@ import ch.hsr.rapidtweakapp.Application;
 import ch.hsr.rapidtweakapp.activities.TrackElementsActivity;
 import ch.hsr.rapidtweakapp.domain.TrackElements;
 import ch.hsr.rapidtweakapp.helper.IVisitor;
+import ch.hsr.rapidtweakapp.helper.RaceChange;
 
 public class MonitoringMessageService extends IntentService implements IVisitor{
     private TrackElements race;
@@ -40,23 +41,39 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
 
     @Override
     public void visitStraight(StraightTrackElement element) {
-        race.add(element);
-        sendMessage();
-        Log.i("TrackElementAdded", element.getElementName());
+        if(race.getSize() > element.getId()) {
+            race.update(element);
+            sendMessage(RaceChange.UPDATE, element.getId());
+        } else {
+            race.add(element);
+            sendMessage(RaceChange.ADD, element.getId());
+        }
+        Log.i("TrackElementAdded", element.getElementName()+ " ID: " + element.getId());
     }
 
     @Override
     public void visitLeft(LeftCurveTrackElement element) {
-        race.add(element);
-        sendMessage();
-        Log.i("TrackElementAdded", element.getElementName());
+        if(race.getSize() > element.getId()) {
+            race.update(element);
+            sendMessage(RaceChange.UPDATE, element.getId());
+        } else {
+            race.add(element);
+            sendMessage(RaceChange.ADD, element.getId());
+
+        }
+        Log.i("TrackElementAdded", element.getElementName()+ " ID: " + element.getId());
     }
 
     @Override
     public void visitRight(RightCurveTrackElement element) {
-        race.add(element);
-        sendMessage();
-        Log.i("TrackElementAdded", element.getElementName());
+        if(race.getSize() > element.getId()) {
+            race.update(element);
+            sendMessage(RaceChange.UPDATE, element.getId());
+        } else {
+            race.add(element);
+            sendMessage(RaceChange.ADD, element.getId());
+        }
+        Log.i("TrackElementAdded", element.getElementName() + " ID: " + element.getId());
     }
 
     @Override
@@ -64,8 +81,10 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
         Log.i("TrackElementAdded", element.getElementName());
     }
 
-    private void sendMessage() {
+    private void sendMessage(RaceChange changeType, int position) {
         Intent intent = new Intent("raceChanged");
+        intent.putExtra("changeType", changeType);
+        intent.putExtra("position", position);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

@@ -24,6 +24,7 @@ public class Application extends android.app.Application implements Observer {
     public TrackElements getRace() {
         return race;
     }
+
     @Override
     public void update(Observable observable, Object data) {
 

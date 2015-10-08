@@ -15,12 +15,25 @@ public class TrackElements {
 
     }
 
-    public void add(TrackElement trackElement) {
-        trackElements.add(trackElement);
+    public void add(TrackElement element) {
+        int index = element.getId();
+        if(index >= 0 && index < trackElements.size()) {
+            trackElements.set(index, element);
+        } else {
+            int insertNulls = index - trackElements.size();
+            for (int i = 0; i < insertNulls; i++) {
+                trackElements.add(null);
+            }
+            trackElements.add(element);
+        }
     }
 
     public TrackElement get(int position) {
         return trackElements.get(position);
+    }
+
+    public void update(TrackElement trackElement) {
+        trackElements.set(trackElement.getId(),trackElement);
     }
 
     public int getSize() {

@@ -16,6 +16,7 @@ import java.util.Observable;
 import ch.hsr.rapidtweakapp.Application;
 import ch.hsr.rapidtweakapp.R;
 import ch.hsr.rapidtweakapp.domain.TrackElements;
+import ch.hsr.rapidtweakapp.helper.RaceChange;
 import ch.hsr.rapidtweakapp.helper.TrackElementRVAdapter;
 
 /**
@@ -37,6 +38,10 @@ public class TrackElementsActivity extends Main  {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
 
+        Application app = ((Application)this.getApplication());
+        adapter = new TrackElementRVAdapter(app.getRace());
+        rv.setAdapter(adapter);
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("raceChanged"));
     }
 
@@ -44,15 +49,23 @@ public class TrackElementsActivity extends Main  {
         @Override
         public void onReceive(Context context, Intent intent) {
             //Log.i("Broadcast", "Received");
-            onDataUpdate();
+            RaceChange changeType = (RaceChange)intent.getSerializableExtra("changeType");
+            int position = intent.getIntExtra("position", 0);
+            switch (changeType) {
+                case ADD:
+                    onDataAdd(position);
+                    break;
+                case UPDATE:
+                    onDataUpdate(position);
+                    break;
+            }
         }
     };
 
-    public void onDataUpdate() {
-
-        Application app = ((Application)this.getApplication());
-        adapter = new TrackElementRVAdapter(app.getRace());
-        rv.setAdapter(adapter);
-        rv.getAdapter().notifyDataSetChanged();
+    public void onDataAdd(int position) {
+        rv.getAdapter().notifyItemInserted(position);
+    }
+    public void onDataUpdate(int position) {
+        rv.getAdapter().notifyItemChanged(position);
     }
 }
