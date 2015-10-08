@@ -10,12 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import java.util.List;
-import java.util.Observable;
-
 import ch.hsr.rapidtweakapp.Application;
 import ch.hsr.rapidtweakapp.R;
-import ch.hsr.rapidtweakapp.domain.TrackElements;
 import ch.hsr.rapidtweakapp.helper.RaceChange;
 import ch.hsr.rapidtweakapp.helper.RaceInformation;
 import ch.hsr.rapidtweakapp.helper.TrackElementRVAdapter;

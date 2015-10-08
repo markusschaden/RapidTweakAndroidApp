@@ -8,27 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
-import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Speed;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElement;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.TrackElement;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import ch.hsr.rapidtweakapp.R;
-import ch.hsr.rapidtweakapp.domain.TrackElements;
+import ch.hsr.rapidtweakapp.domain.Race;
 
 /**
  * Created by Noah on 06.10.2015.
  */
 public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementViewHolder> {
-    private TrackElements dataset;
+    private Race dataset;
     private Context context;
 
-    public TrackElementRVAdapter(Context context, TrackElements trackElements) {
+    public TrackElementRVAdapter(Context context, Race race) {
         this.context = context;
-        this.dataset = trackElements;
+        this.dataset = race;
     }
 
     @Override

@@ -14,13 +14,12 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElem
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.StraightTrackElement;
 
 import ch.hsr.rapidtweakapp.Application;
-import ch.hsr.rapidtweakapp.activities.TrackElementsActivity;
-import ch.hsr.rapidtweakapp.domain.TrackElements;
+import ch.hsr.rapidtweakapp.domain.Race;
 import ch.hsr.rapidtweakapp.helper.IVisitor;
 import ch.hsr.rapidtweakapp.helper.RaceChange;
 
 public class MonitoringMessageService extends IntentService implements IVisitor{
-    private TrackElements race;
+    private Race race;
 
     public MonitoringMessageService(){
         super("MonitoringMessageService");

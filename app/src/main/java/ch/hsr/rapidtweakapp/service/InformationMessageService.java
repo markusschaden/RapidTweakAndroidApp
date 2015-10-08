@@ -8,15 +8,13 @@ import android.util.Log;
 
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.ManualSpeedMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Message;
-import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.MonitoringMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
 
 import ch.hsr.rapidtweakapp.Application;
-import ch.hsr.rapidtweakapp.domain.TrackElements;
+import ch.hsr.rapidtweakapp.domain.Race;
 import ch.hsr.rapidtweakapp.helper.IInformationVisitor;
-import ch.hsr.rapidtweakapp.helper.RaceChange;
 import ch.hsr.rapidtweakapp.helper.RaceInformation;
 
 /**
@@ -41,7 +39,7 @@ public class InformationMessageService extends IntentService implements IInforma
 
     @Override
     public void visit(StartMessage elementClass) {
-        TrackElements race = ((Application)this.getApplication()).getRace();
+        Race race = ((Application)this.getApplication()).getRace();
         race.startRace();
         Log.i("InformationService", "Race Restarted");
         sendMessage(RaceInformation.RACE_START);
@@ -54,7 +52,7 @@ public class InformationMessageService extends IntentService implements IInforma
 
     @Override
     public void visit(RoundTimeMessage elementClass) {
-        TrackElements race = ((Application)this.getApplication()).getRace();
+        Race race = ((Application)this.getApplication()).getRace();
         race.setRoundNumber(race.getRoundNumber() + 1);
         race.setRoundTimeMessage(elementClass.getRoundTime());
         sendMessage(RaceInformation.ROUNDTIME);
