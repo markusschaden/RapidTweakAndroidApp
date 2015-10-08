@@ -53,8 +53,7 @@ public class InformationMessageService extends IntentService implements IInforma
     @Override
     public void visit(RoundTimeMessage elementClass) {
         Race race = ((Application)this.getApplication()).getRace();
-        race.setRoundNumber(race.getRoundNumber() + 1);
-        race.setRoundTimeMessage(elementClass.getRoundTime());
+        race.addRoundtime(elementClass.getRoundTime());
         sendMessage(RaceInformation.ROUNDTIME);
     }
 

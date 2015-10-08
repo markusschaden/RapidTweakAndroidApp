@@ -8,10 +8,11 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.widget.TextView;
 
 import ch.hsr.rapidtweakapp.Application;
 import ch.hsr.rapidtweakapp.R;
+import ch.hsr.rapidtweakapp.domain.Race;
 import ch.hsr.rapidtweakapp.helper.RaceChange;
 import ch.hsr.rapidtweakapp.helper.RaceInformation;
 import ch.hsr.rapidtweakapp.helper.TrackElementRVAdapter;
@@ -20,7 +21,11 @@ import ch.hsr.rapidtweakapp.helper.TrackElementRVAdapter;
  * Created by Noah on 30.09.2015.
  */
 public class TrackElementsActivity extends Main  {
+    Race race;
     TrackElementRVAdapter adapter;
+    TextView roundNumber;
+    TextView roundTimeBest;
+    TextView roundTimeLast;
     RecyclerView rv;
 
     @Override
@@ -28,6 +33,20 @@ public class TrackElementsActivity extends Main  {
         super.onCreate(savedInstanceState);
         super.setActivityTitle(getString(R.string.track));
         setContentView(R.layout.activity_track_elements);
+
+        race = ((Application)getApplication()).getRace();
+
+        roundNumber = (TextView)findViewById(R.id.race_round_number);
+        roundTimeBest = (TextView)findViewById(R.id.race_round_time_best);
+        roundTimeLast = (TextView)findViewById(R.id.race_round_time_last);
+        roundNumber.setText("Round Number: " + race.getRoundNumber());
+        if(race.getRoundTimeBest() != 999999){
+            roundTimeBest.setText("Best: " + race.getRoundtimeBestString());
+        } else {
+            roundTimeBest.setText("Best: N/A");
+        }
+        roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
+
 
         rv = (RecyclerView) findViewById(R.id.track_element_container);
         rv.setHasFixedSize(true);
@@ -81,13 +100,12 @@ public class TrackElementsActivity extends Main  {
         rv.getAdapter().notifyItemChanged(position);
     }
     public void onStartRace(){
-//        Log.i("Activity", "On Race Restart");
-//        Application app = ((Application)this.getApplication());
-//        adapter = new TrackElementRVAdapter(this, app.getRace());
-//        rv.setAdapter(adapter);
         rv.getAdapter().notifyDataSetChanged();
     }
     public void onRoundtime(){
-        Log.i("RoundTime", "Activity got Roundtime");
+        Race race = ((Application)this.getApplication()).getRace();
+        roundNumber.setText("Round Number: " + race.getRoundNumber());
+        roundTimeBest.setText("Best: " + race.getRoundtimeBestString());
+        roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
     }
 }

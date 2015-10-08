@@ -4,6 +4,7 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,12 +14,10 @@ import lombok.Setter;
  */
 public class Race {
     private List<Element> elements = new ArrayList<Element>();
-    @Setter @Getter
-    private int roundNumber;
-    @Setter @Getter
-    private long roundTimeMessage;
+    private List<Long> roundTimeList = new ArrayList<Long>();
+    private long roundTimeBest = 999999;
     public Race() {
-
+        roundTimeList.add(new Long(0));
     }
 
     public void add(Element element) {
@@ -32,6 +31,34 @@ public class Race {
             }
             elements.add(element);
         }
+    }
+    public void addRoundtime(long roundtime) {
+        if(roundTimeBest > roundtime){
+            roundTimeBest = roundtime;
+        }
+        roundTimeList.add(roundtime);
+    }
+
+    public String getRoundtimeLastString() {
+        long raw = roundTimeList.get(roundTimeList.size() - 1);
+        return String.format("%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(raw),
+                TimeUnit.MILLISECONDS.toSeconds(raw) % TimeUnit.MINUTES.toSeconds(1),
+                TimeUnit.MILLISECONDS.toMillis(raw) % TimeUnit.SECONDS.toMillis(1));
+    }
+
+    public long getRoundTimeBest(){
+        return roundTimeBest;
+    }
+    public String getRoundtimeBestString() {
+        return String.format("%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(roundTimeBest),
+                TimeUnit.MILLISECONDS.toSeconds(roundTimeBest) % TimeUnit.MINUTES.toSeconds(1),
+                TimeUnit.MILLISECONDS.toMillis(roundTimeBest) % TimeUnit.SECONDS.toMillis(1));
+    }
+
+    public int getRoundNumber(){
+        return roundTimeList.size();
     }
 
     public Element get(int position) {
@@ -48,5 +75,7 @@ public class Race {
     
     public void startRace() {
         elements.clear();
+        roundTimeList.clear();
+        roundTimeBest = 999999;
     }
 }

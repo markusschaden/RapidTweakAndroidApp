@@ -23,18 +23,12 @@ public class Main extends AppCompatActivity implements Logger.OnFragmentInteract
 
     private DrawerLayout mDrawerLayout;
     private String activityTitle;
-    private RapidTweakWebSocketClient connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            connection = new RapidTweakWebSocketClient(this);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
