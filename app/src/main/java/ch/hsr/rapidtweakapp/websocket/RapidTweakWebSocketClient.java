@@ -6,6 +6,9 @@ import android.util.Log;
 
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Message;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.MonitoringMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
@@ -16,6 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import ch.hsr.rapidtweakapp.helper.Serializator;
+import ch.hsr.rapidtweakapp.service.InformationMessageService;
 import ch.hsr.rapidtweakapp.service.MonitoringMessageService;
 
 /**
@@ -27,7 +31,7 @@ public class RapidTweakWebSocketClient extends WebSocketClient {
     private Context context;
 
     public RapidTweakWebSocketClient(Context context) throws URISyntaxException {
-        super(new URI("ws://152.96.233.142:10500"), new Draft_17());
+        super(new URI("ws://152.96.234.234:10500"), new Draft_17());
 
         this.context = context;
         connect();
@@ -52,6 +56,10 @@ public class RapidTweakWebSocketClient extends WebSocketClient {
                 if(clazz == MonitoringMessage.class) {
                     Intent intent = new Intent(context, MonitoringMessageService.class);
                     intent.putExtra("MonitoringMessage", rawMessage);
+                    context.startService(intent);
+                } else if (clazz == StartMessage.class || clazz ==  StopMessage.class || clazz == RoundTimeMessage.class) {
+                    Intent intent = new Intent(context, InformationMessageService.class);
+                    intent.putExtra("InformationMessage", rawMessage);
                     context.startService(intent);
                 }
 

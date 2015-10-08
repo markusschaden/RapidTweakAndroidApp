@@ -6,15 +6,20 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.TrackElement;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by Noah on 06.10.2015.
  */
 public class TrackElements {
     private List<Element> elements = new ArrayList<Element>();
-
+    @Setter @Getter
+    private int roundNumber;
+    @Setter @Getter
+    private long roundTimeMessage;
     public TrackElements() {
 
     }
@@ -30,7 +35,6 @@ public class TrackElements {
             }
             elements.add(element);
         }
-        Log.i("A Race elements:",""+elements.size());
     }
 
     public Element get(int position) {
@@ -39,10 +43,14 @@ public class TrackElements {
 
     public void update(Element element) {
         elements.set(element.getId(), element);
-        Log.i("U Race elements:",""+elements.size());
+        Log.i("U Race elements:", "" + elements.size());
     }
 
     public int getSize() {
         return elements.size();
+    }
+    
+    public void startRace() {
+        elements.clear();
     }
 }

@@ -1,5 +1,9 @@
 package ch.hsr.rapidtweakapp.helper;
 
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.ManualSpeedMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.LeftCurveTrackElement;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.RightCurveTrackElement;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElement;
@@ -13,5 +17,4 @@ public interface IVisitor {
     void visitLeft(LeftCurveTrackElement elementClass);
     void visitRight(RightCurveTrackElement elementClass);
     void visitSpeed(SpeedMeasureTrackElement elementClass);
-
 }
