@@ -17,6 +17,7 @@ public class SpeedMeasureTrackElement extends Element implements IVisitee{
 
     protected Multimap<Integer, Double> speeds = ArrayListMultimap.create();
     private double speedLimit;
+    private double lastSpeed;
     private String sourceId;
 
     public Double getAveragePosition(int power) {

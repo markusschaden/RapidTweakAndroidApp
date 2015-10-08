@@ -39,7 +39,7 @@ public class TrackElementsActivity extends Main  {
         rv.setLayoutManager(llm);
 
         Application app = ((Application)this.getApplication());
-        adapter = new TrackElementRVAdapter(app.getRace());
+        adapter = new TrackElementRVAdapter(this, app.getRace());
         rv.setAdapter(adapter);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("raceChanged"));

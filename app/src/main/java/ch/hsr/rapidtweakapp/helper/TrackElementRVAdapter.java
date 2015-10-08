@@ -1,5 +1,7 @@
 package ch.hsr.rapidtweakapp.helper;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +21,11 @@ import ch.hsr.rapidtweakapp.domain.TrackElements;
  */
 public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementViewHolder> {
     private TrackElements dataset;
+    private Context context;
 
-    public TrackElementRVAdapter(TrackElements trackElements) {
-        dataset = trackElements;
+    public TrackElementRVAdapter(Context context, TrackElements trackElements) {
+        this.context = context;
+        this.dataset = trackElements;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
             return;
         }
         long best = trackElement.getBestTime();
-        long last = (long)trackElement.getLatestDuration();
+        long last = trackElement.getLatestDuration();
         String bestString = String.format("%02d:%02d",
                 TimeUnit.MILLISECONDS.toSeconds(best),
                 TimeUnit.MILLISECONDS.toMillis(best) % TimeUnit.SECONDS.toMillis(1));
@@ -47,12 +51,20 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
                 TimeUnit.MILLISECONDS.toMillis(last) % TimeUnit.SECONDS.toMillis(1));
 
         holder.title.setText(trackElement.getElementName());
+        if(trackElement.getElementName().startsWith("Left curve")) {
+            holder.image.setBackgroundResource(R.drawable.ic_left_curve);
+        } else if(trackElement.getElementName().startsWith("Right curve")) {
+            holder.image.setBackgroundResource(R.drawable.ic_right_curve);
+        } else {
+            holder.image.setBackgroundResource(R.drawable.ic_straight);
+        }
+
         holder.best.setText("Best: " + bestString);
         holder.last.setText("Last: " + lastString);
-        if(best <= last) {
-            holder.cardView.setCardBackgroundColor(R.color.primary_dark);
+        if(last <= best) {
+            holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.primary_dark));
         } else {
-            holder.cardView.setCardBackgroundColor(R.color.accent);
+            holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.accent));
         }
     }
 
