@@ -3,7 +3,9 @@ package ch.hsr.rapidtweakapp.domain;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import lombok.Getter;
@@ -16,6 +18,9 @@ public class Race {
     private List<Element> elements = new ArrayList<Element>();
     private List<Long> roundTimeList = new ArrayList<Long>();
     private long roundTimeBest = 999999;
+    @Setter @Getter
+    private Map<Integer, Boolean> durationsCollapsed = new HashMap<>();
+
     public Race() {
         roundTimeList.add(new Long(0));
     }

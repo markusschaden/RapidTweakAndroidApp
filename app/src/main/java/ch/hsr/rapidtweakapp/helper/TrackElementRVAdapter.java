@@ -3,14 +3,21 @@ package ch.hsr.rapidtweakapp.helper;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
+import com.google.common.collect.Lists;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Duration;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElement;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.TrackElement;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import ch.hsr.rapidtweakapp.R;
@@ -36,13 +43,16 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
     }
 
     @Override
-    public void onBindViewHolder(TrackElementViewHolder holder, int position) {
+    public void onBindViewHolder(final TrackElementViewHolder holder, int position) {
         final Element element = dataset.get(position);
         if(element == null){
             return;
         }
+
+        holder.element = element;
+
         if(element instanceof TrackElement) {
-            TrackElement trackElement = (TrackElement)element;
+            final TrackElement trackElement = (TrackElement)element;
             holder.speedElementContainer.setVisibility(View.GONE);
             holder.trackElementContainer.setVisibility(View.VISIBLE);
             long best = trackElement.getBestTime();
@@ -70,6 +80,39 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
             } else {
                 holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.accent));
             }
+
+
+            holder.durations.setOnTouchListener(new View.OnTouchListener() {
+                //Prevent scrolling in recyclerview
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+
+            List<String> lst = new ArrayList<>();
+            int round = 1;
+            for(Duration d : trackElement.getDurations()) {
+                String durationString = String.format("%02d:%02d",
+                        TimeUnit.MILLISECONDS.toSeconds(d.getTime()),
+                        TimeUnit.MILLISECONDS.toMillis(d.getTime()) % TimeUnit.SECONDS.toMillis(1));
+                lst.add("Round " + round +": " + durationString);
+                round++;
+            }
+
+            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, Lists.reverse(lst));
+            holder.durations.setAdapter(itemsAdapter);
+
+            if(dataset.getDurationsCollapsed().containsKey(position) && dataset.getDurationsCollapsed().get(position)) {
+                holder.detailedInfos.setVisibility(View.VISIBLE);
+            } else {
+                holder.detailedInfos.setVisibility(View.GONE);
+            }
+
+            holder.cardView.setOnClickListener(new CardClickListener(holder, position));
+
+
+
         } else if(element instanceof SpeedMeasureTrackElement) {
             holder.trackElementContainer.setVisibility(View.GONE);
             holder.speedElementContainer.setVisibility(View.VISIBLE);
@@ -87,6 +130,28 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
     @Override
     public int getItemCount() {
         return dataset.getSize();
+    }
+
+    class CardClickListener implements View.OnClickListener{
+
+        private int position;
+        private TrackElementViewHolder holder;
+
+        public CardClickListener(TrackElementViewHolder holder, int position) {
+            this.holder = holder;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(holder.detailedInfos.getVisibility() == View.GONE) {
+                holder.detailedInfos.setVisibility(View.VISIBLE);
+                dataset.getDurationsCollapsed().put(position, true);
+            } else {
+                holder.detailedInfos.setVisibility(View.GONE);
+                dataset.getDurationsCollapsed().remove(position);
+            }
+        }
     }
 
 }

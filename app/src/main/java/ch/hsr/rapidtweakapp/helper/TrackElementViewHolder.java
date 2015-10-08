@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
 
 import org.w3c.dom.Text;
 
@@ -16,7 +19,7 @@ import ch.hsr.rapidtweakapp.R;
  */
 public class TrackElementViewHolder extends RecyclerView.ViewHolder {
     public CardView cardView;
-    public LinearLayout trackElementContainer, speedElementContainer;
+    public LinearLayout trackElementContainer, speedElementContainer, detailedInfos;
     public ImageView image;
     public TextView title;
     public TextView best;
@@ -25,7 +28,10 @@ public class TrackElementViewHolder extends RecyclerView.ViewHolder {
     public TextView speedTitle;
     public TextView maxSpeed;
     public TextView speed;
-    
+
+    public ListView durations;
+    public Element element;
+
     public TrackElementViewHolder(View itemView) {
         super(itemView);
         cardView = (CardView)itemView.findViewById(R.id.card_track_element);
@@ -40,6 +46,9 @@ public class TrackElementViewHolder extends RecyclerView.ViewHolder {
 
         trackElementContainer = (LinearLayout)itemView.findViewById(R.id.track_element_container);
         speedElementContainer = (LinearLayout)itemView.findViewById(R.id.speed_element_container);
+        detailedInfos = (LinearLayout)itemView.findViewById(R.id.detailedInfos);
+
+        durations = (ListView)itemView.findViewById(R.id.listDurations);
     }
 
 

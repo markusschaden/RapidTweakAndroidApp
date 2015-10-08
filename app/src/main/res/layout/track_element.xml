@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    card_view:cardUseCompatPadding="true"
-    android:id="@+id/card_track_element">
+    android:id="@+id/card_track_element"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    card_view:cardUseCompatPadding="true">
+
     <LinearLayout
 
         android:id="@+id/track_element_container"
@@ -12,35 +14,52 @@
         android:padding="16dp">
 
         <ImageView
+            android:id="@+id/track_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/track_image"
-            android:background="@drawable/ic_straight"/>
+            android:background="@drawable/ic_straight" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/track_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/track_title"
                 android:text="Title"
-                android:textSize="30sp"/>
+                android:textSize="30sp" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/track_time_best"
-                android:text="Best Time"
-                android:layout_below="@id/track_title"
-                />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/track_title"
+                android:text="Best Time" />
+
+            <TextView
                 android:id="@+id/track_time_last"
-                android:text="Last Time"
-                android:layout_below="@+id/track_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/track_title"
                 android:layout_alignRight="@+id/track_title"
-                android:layout_alignEnd="@+id/track_title" />
+                android:layout_below="@+id/track_title"
+                android:text="Last Time" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/detailedInfos"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/track_time_last">
+
+                <ListView
+                    android:id="@+id/listDurations"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ListView>
+
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
@@ -48,38 +67,41 @@
         android:id="@+id/speed_element_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:visibility="gone">
 
         <ImageView
+            android:id="@+id/speed_element_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/speed_element_image"
-            android:background="@drawable/ic_speed"/>
+            android:background="@drawable/ic_speed" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/speed_element_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/speed_element_id"
                 android:text="Title"
-                android:textSize="30sp"/>
+                android:textSize="30sp" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/speed_element_speed"
-                android:text="Speed:"
-                android:layout_below="@id/speed_element_id"
-                />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/speed_element_id"
+                android:text="Speed:" />
+
+            <TextView
                 android:id="@+id/speed_element_maxSpeed"
-                android:text="Max Speed:"
-                android:layout_below="@+id/speed_element_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/speed_element_id"
                 android:layout_alignRight="@+id/speed_element_id"
-                android:layout_alignEnd="@+id/speed_element_id" />
+                android:layout_below="@+id/speed_element_id"
+                android:text="Max Speed:" />
         </RelativeLayout>
     </LinearLayout>
 

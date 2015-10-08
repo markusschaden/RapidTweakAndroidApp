@@ -31,7 +31,7 @@ public class RapidTweakWebSocketClient extends WebSocketClient {
     private Context context;
 
     public RapidTweakWebSocketClient(Context context) throws URISyntaxException {
-        super(new URI("ws://152.96.234.234:10500"), new Draft_17());
+        super(new URI("ws://152.96.233.142:10500"), new Draft_17());
 
         this.context = context;
         connect();
