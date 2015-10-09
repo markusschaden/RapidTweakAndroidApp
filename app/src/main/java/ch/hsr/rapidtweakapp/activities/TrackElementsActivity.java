@@ -8,11 +8,19 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
 
 import ch.hsr.rapidtweakapp.Application;
 import ch.hsr.rapidtweakapp.R;
@@ -27,9 +35,15 @@ import ch.hsr.rapidtweakapp.helper.TrackElementRVAdapter;
 public class TrackElementsActivity extends Main  {
     Race race;
     TrackElementRVAdapter adapter;
+    CardView raceHeader;
     TextView roundNumber;
     TextView roundTimeBest;
     TextView roundTimeLast;
+
+    LinearLayout detailRaceInfo;
+    ListView roundHistoryList;
+    ArrayList<String> roundHistoryValues = new ArrayList<String>();
+
     ProgressBar powerLevel;
     TextView powerLevelText;
     RecyclerView rv;
@@ -49,9 +63,13 @@ public class TrackElementsActivity extends Main  {
 
         race = ((Application)getApplication()).getRace();
 
+        raceHeader = (CardView)findViewById(R.id.race_header);
         roundNumber = (TextView)findViewById(R.id.race_round_number);
         roundTimeBest = (TextView)findViewById(R.id.race_round_time_best);
         roundTimeLast = (TextView)findViewById(R.id.race_round_time_last);
+
+        detailRaceInfo = (LinearLayout)findViewById(R.id.detailed_race_info);
+        roundHistoryList = (ListView)findViewById(R.id.round_time_history);
         powerLevelText = (TextView)findViewById(R.id.powerLevelText);
         powerLevel = (ProgressBar)findViewById(R.id.powerLevel);
         roundNumber.setText("Round Number: " + race.getRoundNumber());
@@ -62,6 +80,17 @@ public class TrackElementsActivity extends Main  {
         }
         roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
         resetHeaderInformation();
+
+        raceHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(detailRaceInfo.getVisibility() == View.GONE) {
+                    detailRaceInfo.setVisibility(View.VISIBLE);
+                } else {
+                    detailRaceInfo.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
         rv = (RecyclerView) findViewById(R.id.track_element_container);
@@ -121,6 +150,7 @@ public class TrackElementsActivity extends Main  {
             roundTimeBest.setText("Best: N/A");
         }
         roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
+        roundHistoryValues.clear();
     }
 
     public void onDataAdd(int position) {
@@ -138,5 +168,8 @@ public class TrackElementsActivity extends Main  {
         roundNumber.setText("Round Number: " + race.getRoundNumber());
         roundTimeBest.setText("Best: " + race.getRoundtimeBestString());
         roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
+        roundHistoryValues.add("Round " + (race.getRoundNumber() - 1) + ": " + race.getRoundtimeLastString());
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Lists.reverse(roundHistoryValues));
+        roundHistoryList.setAdapter(itemsAdapter);
     }
 }
