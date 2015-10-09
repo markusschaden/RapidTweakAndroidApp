@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +40,13 @@ public class TrackElementsActivity extends Main  {
         super.setActivityTitle(getString(R.string.track));
         setContentView(R.layout.activity_track_elements);
 
+        Application app = ((Application)this.getApplication());
+
+        if(!app.connectionStatus()) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            app.connect(prefs.getString("server_address", "10.0.2.2"));
+        }
+
         race = ((Application)getApplication()).getRace();
 
         roundNumber = (TextView)findViewById(R.id.race_round_number);
@@ -52,6 +61,7 @@ public class TrackElementsActivity extends Main  {
             roundTimeBest.setText("Best: N/A");
         }
         roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
+        resetHeaderInformation();
 
 
         rv = (RecyclerView) findViewById(R.id.track_element_container);
@@ -60,7 +70,6 @@ public class TrackElementsActivity extends Main  {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
 
-        Application app = ((Application)this.getApplication());
         adapter = new TrackElementRVAdapter(this, app.getRace());
         rv.setAdapter(adapter);
 
@@ -104,6 +113,16 @@ public class TrackElementsActivity extends Main  {
         }
     };
 
+    private void resetHeaderInformation(){
+        roundNumber.setText("Round Number: " + race.getRoundNumber());
+        if(race.getRoundTimeBest() != 999999){
+            roundTimeBest.setText("Best: " + race.getRoundtimeBestString());
+        } else {
+            roundTimeBest.setText("Best: N/A");
+        }
+        roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
+    }
+
     public void onDataAdd(int position) {
         rv.getAdapter().notifyItemInserted(position);
     }
@@ -112,6 +131,7 @@ public class TrackElementsActivity extends Main  {
     }
     public void onStartRace(){
         rv.getAdapter().notifyDataSetChanged();
+        resetHeaderInformation();
     }
     public void onRoundtime(){
         Race race = ((Application)this.getApplication()).getRace();
