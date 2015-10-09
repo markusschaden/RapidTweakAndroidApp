@@ -62,13 +62,13 @@ public class Main extends AppCompatActivity implements Logger.OnFragmentInteract
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
-                    /*case R.id.navigation_item_set_server:
-                        startActivity(new Intent(this, LibrarySelectionActivity.class));
+                    case R.id.navigation_item_set_server:
+                        startActivity(new Intent(Main.this, SettingsActivity.class));
                         break;
-                    case R.id.navigation_item_login:
-                        startActivity(new Intent(GadgeothekMain.this, loginUser.class));
+                    case R.id.navigation_item_track_elements:
+                        startActivity(new Intent(Main.this, TrackElementsActivity.class));
                         break;
-                    case R.id.navigation_item_register:
+                    /*case R.id.navigation_item_register:
                         startActivity(new Intent(GadgeothekMain.this, registerUser.class));
                         break;
                     case R.id.navigation_item_reservation:
