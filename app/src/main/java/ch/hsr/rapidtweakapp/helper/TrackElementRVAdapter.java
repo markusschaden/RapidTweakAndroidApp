@@ -151,7 +151,7 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
                 holder.detailedInfosSpeed.setVisibility(View.GONE);
             }
 
-            if (speedMeasureTrackElement.getLastSpeed() >= speedMeasureTrackElement.getSpeedLimit()) {
+            if (speedMeasureTrackElement.getSpeedLimit() > 0 && speedMeasureTrackElement.getLastSpeed() >= speedMeasureTrackElement.getSpeedLimit()) {
                 holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.accent));
             } else {
                 holder.cardView.setCardBackgroundColor(Color.WHITE);
