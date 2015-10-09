@@ -48,13 +48,7 @@ public class TrackElementsActivity extends Main  {
         roundNumber = (TextView)findViewById(R.id.race_round_number);
         roundTimeBest = (TextView)findViewById(R.id.race_round_time_best);
         roundTimeLast = (TextView)findViewById(R.id.race_round_time_last);
-        roundNumber.setText("Round Number: " + race.getRoundNumber());
-        if(race.getRoundTimeBest() != 999999){
-            roundTimeBest.setText("Best: " + race.getRoundtimeBestString());
-        } else {
-            roundTimeBest.setText("Best: N/A");
-        }
-        roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
+        resetHeaderInformation();
 
 
         rv = (RecyclerView) findViewById(R.id.track_element_container);
@@ -101,6 +95,16 @@ public class TrackElementsActivity extends Main  {
         }
     };
 
+    private void resetHeaderInformation(){
+        roundNumber.setText("Round Number: " + race.getRoundNumber());
+        if(race.getRoundTimeBest() != 999999){
+            roundTimeBest.setText("Best: " + race.getRoundtimeBestString());
+        } else {
+            roundTimeBest.setText("Best: N/A");
+        }
+        roundTimeLast.setText("Last: " + race.getRoundtimeLastString());
+    }
+
     public void onDataAdd(int position) {
         rv.getAdapter().notifyItemInserted(position);
     }
@@ -109,6 +113,7 @@ public class TrackElementsActivity extends Main  {
     }
     public void onStartRace(){
         rv.getAdapter().notifyDataSetChanged();
+        resetHeaderInformation();
     }
     public void onRoundtime(){
         Race race = ((Application)this.getApplication()).getRace();

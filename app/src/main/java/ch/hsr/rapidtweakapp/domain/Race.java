@@ -81,6 +81,7 @@ public class Race {
     public void startRace() {
         elements.clear();
         roundTimeList.clear();
+        roundTimeList.add(new Long(0));
         roundTimeBest = 999999;
     }
 }
