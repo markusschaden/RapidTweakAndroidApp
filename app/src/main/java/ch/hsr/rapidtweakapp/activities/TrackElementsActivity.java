@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import ch.hsr.rapidtweakapp.Application;
@@ -26,6 +28,8 @@ public class TrackElementsActivity extends Main  {
     TextView roundNumber;
     TextView roundTimeBest;
     TextView roundTimeLast;
+    ProgressBar powerLevel;
+    TextView powerLevelText;
     RecyclerView rv;
 
     @Override
@@ -39,6 +43,8 @@ public class TrackElementsActivity extends Main  {
         roundNumber = (TextView)findViewById(R.id.race_round_number);
         roundTimeBest = (TextView)findViewById(R.id.race_round_time_best);
         roundTimeLast = (TextView)findViewById(R.id.race_round_time_last);
+        powerLevelText = (TextView)findViewById(R.id.powerLevelText);
+        powerLevel = (ProgressBar)findViewById(R.id.powerLevel);
         roundNumber.setText("Round Number: " + race.getRoundNumber());
         if(race.getRoundTimeBest() != 999999){
             roundTimeBest.setText("Best: " + race.getRoundtimeBestString());
@@ -61,6 +67,7 @@ public class TrackElementsActivity extends Main  {
         IntentFilter filter = new IntentFilter();
         filter.addAction("raceChanged");
         filter.addAction("raceInformation");
+        filter.addAction("powerInformation");
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
     }
 
@@ -89,6 +96,10 @@ public class TrackElementsActivity extends Main  {
                         onRoundtime();
                         break;
                 }
+            } else if (intent.getAction().equals("powerInformation")) {
+                int power = intent.getIntExtra("power", 0);
+                powerLevel.setProgress(power);
+                powerLevelText.setText(""+power);
             }
         }
     };

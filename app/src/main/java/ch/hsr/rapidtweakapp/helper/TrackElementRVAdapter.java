@@ -3,7 +3,6 @@ package ch.hsr.rapidtweakapp.helper;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,13 +102,13 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
             ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, Lists.reverse(lst));
             holder.durations.setAdapter(itemsAdapter);
 
-            if(dataset.getDurationsCollapsed().containsKey(position) && dataset.getDurationsCollapsed().get(position)) {
+            if(dataset.getCollapsed().containsKey(position) && dataset.getCollapsed().get(position)) {
                 holder.detailedInfos.setVisibility(View.VISIBLE);
             } else {
                 holder.detailedInfos.setVisibility(View.GONE);
             }
 
-            holder.cardView.setOnClickListener(new CardClickListener(holder, position));
+            holder.cardView.setOnClickListener(new CardClickListenerTrackElement(holder, position));
 
 
 
@@ -124,6 +123,41 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
             holder.maxSpeed.setText("Max Speed: " + speedMeasureTrackElement.getSpeedLimit());
             holder.speedTitle.setText("Speed Measure " +  speedMeasureTrackElement.getSourceId());
             holder.cardView.setCardBackgroundColor(Color.WHITE);
+
+
+            holder.speeds.setOnTouchListener(new View.OnTouchListener() {
+                //Prevent scrolling in recyclerview
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+
+            List<String> lst = new ArrayList<>();
+            int round = 1;
+            for(Double d : speedMeasureTrackElement.getSpeeds()) {
+                String speedString = String.format("%.3f",d);
+
+                lst.add("Round " + round +": " + speedString);
+                round++;
+            }
+
+            ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, Lists.reverse(lst));
+            holder.speeds.setAdapter(itemsAdapter);
+
+            if(dataset.getCollapsed().containsKey(position) && dataset.getCollapsed().get(position)) {
+                holder.detailedInfosSpeed.setVisibility(View.VISIBLE);
+            } else {
+                holder.detailedInfosSpeed.setVisibility(View.GONE);
+            }
+
+            if (speedMeasureTrackElement.getLastSpeed() >= speedMeasureTrackElement.getSpeedLimit()) {
+                holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.accent));
+            } else {
+                holder.cardView.setCardBackgroundColor(Color.WHITE);
+            }
+
+            holder.cardView.setOnClickListener(new CardClickListenerSpeedElement(holder, position));
         }
     }
 
@@ -132,12 +166,12 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
         return dataset.getSize();
     }
 
-    class CardClickListener implements View.OnClickListener{
+    class CardClickListenerTrackElement implements View.OnClickListener{
 
         private int position;
         private TrackElementViewHolder holder;
 
-        public CardClickListener(TrackElementViewHolder holder, int position) {
+        public CardClickListenerTrackElement(TrackElementViewHolder holder, int position) {
             this.holder = holder;
             this.position = position;
         }
@@ -146,10 +180,32 @@ public class TrackElementRVAdapter extends RecyclerView.Adapter<TrackElementView
         public void onClick(View v) {
             if(holder.detailedInfos.getVisibility() == View.GONE) {
                 holder.detailedInfos.setVisibility(View.VISIBLE);
-                dataset.getDurationsCollapsed().put(position, true);
+                dataset.getCollapsed().put(position, true);
             } else {
                 holder.detailedInfos.setVisibility(View.GONE);
-                dataset.getDurationsCollapsed().remove(position);
+                dataset.getCollapsed().remove(position);
+            }
+        }
+    }
+
+    class CardClickListenerSpeedElement implements View.OnClickListener{
+
+        private int position;
+        private TrackElementViewHolder holder;
+
+        public CardClickListenerSpeedElement(TrackElementViewHolder holder, int position) {
+            this.holder = holder;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(holder.detailedInfosSpeed.getVisibility() == View.GONE) {
+                holder.detailedInfosSpeed.setVisibility(View.VISIBLE);
+                dataset.getCollapsed().put(position, true);
+            } else {
+                holder.detailedInfosSpeed.setVisibility(View.GONE);
+                dataset.getCollapsed().remove(position);
             }
         }
     }

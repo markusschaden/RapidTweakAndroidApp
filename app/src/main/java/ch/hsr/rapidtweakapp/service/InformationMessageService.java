@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.ManualSpeedMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Message;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PenaltyMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PowerMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
@@ -33,7 +35,11 @@ public class InformationMessageService extends IntentService implements IInforma
         if(extras.getSerializable("InformationMessage") != null) {
             message = (Message)extras.getSerializable("InformationMessage");
             message.accept(this);
+        } else if(extras.getSerializable("PowerMessage") != null) {
+            message = (Message)extras.getSerializable("PowerMessage");
+            message.accept(this);
         }
+
 
     }
 
@@ -60,6 +66,19 @@ public class InformationMessageService extends IntentService implements IInforma
     @Override
     public void visit(ManualSpeedMessage elementClass) {
 
+    }
+
+    @Override
+    public void visit(PenaltyMessage penaltyMessage) {
+        Race race = ((Application)this.getApplication()).getRace();
+        race.addPenalty(penaltyMessage.getSourceId());
+    }
+
+    @Override
+    public void visit(PowerMessage powerMessage) {
+        Intent intent = new Intent("powerInformation");
+        intent.putExtra("power", powerMessage.getPower());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private void sendMessage(RaceInformation information) {

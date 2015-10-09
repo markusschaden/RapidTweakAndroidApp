@@ -1,6 +1,8 @@
 package ch.hsr.rapidtweakapp.helper;
 
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.ManualSpeedMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PenaltyMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PowerMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
@@ -13,4 +15,6 @@ public interface IInformationVisitor {
     void visit(StopMessage elementClass);
     void visit(RoundTimeMessage elementClass);
     void visit(ManualSpeedMessage elementClass);
+    void visit(PenaltyMessage penaltyMessage);
+    void visit(PowerMessage powerMessage);
 }

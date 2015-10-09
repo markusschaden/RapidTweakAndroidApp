@@ -19,7 +19,7 @@ import ch.hsr.rapidtweakapp.R;
  */
 public class TrackElementViewHolder extends RecyclerView.ViewHolder {
     public CardView cardView;
-    public LinearLayout trackElementContainer, speedElementContainer, detailedInfos;
+    public LinearLayout trackElementContainer, speedElementContainer, detailedInfos, detailedInfosSpeed;
     public ImageView image;
     public TextView title;
     public TextView best;
@@ -29,7 +29,7 @@ public class TrackElementViewHolder extends RecyclerView.ViewHolder {
     public TextView maxSpeed;
     public TextView speed;
 
-    public ListView durations;
+    public ListView durations, speeds;
     public Element element;
 
     public TrackElementViewHolder(View itemView) {
@@ -47,8 +47,11 @@ public class TrackElementViewHolder extends RecyclerView.ViewHolder {
         trackElementContainer = (LinearLayout)itemView.findViewById(R.id.track_element_container);
         speedElementContainer = (LinearLayout)itemView.findViewById(R.id.speed_element_container);
         detailedInfos = (LinearLayout)itemView.findViewById(R.id.detailedInfos);
+        detailedInfosSpeed = (LinearLayout)itemView.findViewById(R.id.detailedInfosSpeed);
+
 
         durations = (ListView)itemView.findViewById(R.id.listDurations);
+        speeds =(ListView)itemView.findViewById(R.id.listSpeeds);
     }
 
 

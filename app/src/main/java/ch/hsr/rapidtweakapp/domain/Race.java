@@ -1,11 +1,13 @@
 package ch.hsr.rapidtweakapp.domain;
 
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 import lombok.Getter;
@@ -19,7 +21,8 @@ public class Race {
     private List<Long> roundTimeList = new ArrayList<Long>();
     private long roundTimeBest = 999999;
     @Setter @Getter
-    private Map<Integer, Boolean> durationsCollapsed = new HashMap<>();
+    private Map<Integer, Boolean> collapsed = new HashMap<>();
+
 
     public Race() {
         roundTimeList.add(new Long(0));
@@ -82,5 +85,18 @@ public class Race {
         elements.clear();
         roundTimeList.clear();
         roundTimeBest = 999999;
+    }
+
+    public void addPenalty(String sourceId) {
+        /*for(Element e : elements) {
+            if(e instanceof SpeedMeasureTrackElement) {
+                SpeedMeasureTrackElement smte = (SpeedMeasureTrackElement)e;
+                if(sourceId.equals(smte.getSourceId())) {
+                    smte.setPenaltyOccured(true);
+                    return smte.getId();
+                }
+            }
+        }
+        return -1;*/
     }
 }

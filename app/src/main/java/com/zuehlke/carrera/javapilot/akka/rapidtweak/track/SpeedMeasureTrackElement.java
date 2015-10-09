@@ -3,6 +3,9 @@ package com.zuehlke.carrera.javapilot.akka.rapidtweak.track;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.hsr.rapidtweakapp.helper.IVisitee;
 import ch.hsr.rapidtweakapp.helper.IVisitor;
 import lombok.Data;
@@ -15,14 +18,14 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class SpeedMeasureTrackElement extends Element implements IVisitee{
 
-    protected Multimap<Integer, Double> speeds = ArrayListMultimap.create();
+    protected List<Double> speeds = new ArrayList<>();
     private double speedLimit;
     private double lastSpeed;
     private String sourceId;
 
     public Double getAveragePosition(int power) {
 
-        return getAverageOfListDouble(speeds.get(power));
+        return getAverageOfListDouble(speeds);
     }
 
     @Override

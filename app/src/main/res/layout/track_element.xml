@@ -102,6 +102,21 @@
                 android:layout_alignRight="@+id/speed_element_id"
                 android:layout_below="@+id/speed_element_id"
                 android:text="Max Speed:" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/detailedInfosSpeed"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/speed_element_maxSpeed">
+
+                <ListView
+                    android:id="@+id/listSpeeds"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ListView>
+
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
