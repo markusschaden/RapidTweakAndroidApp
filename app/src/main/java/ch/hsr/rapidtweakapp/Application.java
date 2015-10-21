@@ -1,15 +1,13 @@
 package ch.hsr.rapidtweakapp;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Coordinate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.List;
 
-import ch.hsr.rapidtweakapp.activities.SettingsActivity;
 import ch.hsr.rapidtweakapp.domain.Race;
 import ch.hsr.rapidtweakapp.websocket.RapidTweakWebSocketClient;
 

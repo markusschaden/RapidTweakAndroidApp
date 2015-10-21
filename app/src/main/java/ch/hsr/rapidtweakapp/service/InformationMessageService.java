@@ -10,6 +10,8 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.ManualSpee
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Message;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PenaltyMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PowerMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RaceDrawerMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RacePositionMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
@@ -79,6 +81,21 @@ public class InformationMessageService extends IntentService implements IInforma
         Intent intent = new Intent("powerInformation");
         intent.putExtra("power", powerMessage.getPower());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    @Override
+    public void visit(RaceDrawerMessage raceDrawerMessage) {
+        Intent intent = new Intent("raceDrawerInformation");
+        intent.putExtra("raceDrawerInformation", raceDrawerMessage);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    @Override
+    public void visit(RacePositionMessage racePositionMessage) {
+        Intent intent = new Intent("racePositionInformation");
+        intent.putExtra("racePositionInformation", racePositionMessage);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
     }
 
     private void sendMessage(RaceInformation information) {

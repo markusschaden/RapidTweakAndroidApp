@@ -51,7 +51,7 @@ public class TrackElementsActivity extends Main  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setActivityTitle(getString(R.string.track));
+        super.setActivityTitle(getString(R.string.track_elements));
         setContentView(R.layout.activity_track_elements);
 
         Application app = ((Application)this.getApplication());
