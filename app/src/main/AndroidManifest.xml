@@ -22,6 +22,9 @@
         <activity android:name=".activities.SettingsActivity">
 
         </activity>
+        <activity android:name=".activities.Track">
+
+        </activity>
 
         <service
             android:name=".service.MonitoringMessageService"

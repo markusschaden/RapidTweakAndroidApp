@@ -2,13 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/settings_container">
+
     <fragment
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/content"
-        android:name="ch.hsr.rapidtweakapp.fragments.SettingsFragment"
-        >
+        android:name="ch.hsr.rapidtweakapp.fragments.SettingsFragment">
 
     </fragment>
 

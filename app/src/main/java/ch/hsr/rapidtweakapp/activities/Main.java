@@ -68,10 +68,10 @@ public class Main extends AppCompatActivity implements Logger.OnFragmentInteract
                     case R.id.navigation_item_track_elements:
                         startActivity(new Intent(Main.this, TrackElementsActivity.class));
                         break;
-                    /*case R.id.navigation_item_register:
-                        startActivity(new Intent(GadgeothekMain.this, registerUser.class));
+                    case R.id.navigation_item_track:
+                        startActivity(new Intent(Main.this, Track.class));
                         break;
-                    case R.id.navigation_item_reservation:
+                    /*case R.id.navigation_item_reservation:
                         if(LibraryService.isLoggedIn())
                             startActivity(new Intent(GadgeothekMain.this, ReservationActivity.class));
                         else Toast.makeText(GadgeothekMain.this, "Not Logged in!", Toast.LENGTH_SHORT).show();
