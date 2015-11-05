@@ -29,7 +29,7 @@ public class CanvasView extends View {
     private Canvas mCanvas;
     private Path mPath;
     Context context;
-    private Paint mPaint;
+    private Paint borderPaint, streetPaint, linePaint;
     private float mX, mY;
     private static final float TOLERANCE = 5;
     private List<Coordinate> raceCoordinantes;
@@ -44,16 +44,23 @@ public class CanvasView extends View {
         mPath = new Path();
 
         // and we set a new Paint with the desired attributes
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-//        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeWidth(16f);
+        borderPaint = new Paint();
+        borderPaint.setAntiAlias(true);
+        borderPaint.setColor(Color.RED);
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setStrokeWidth(16f);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.carrera_small);
-        BitmapShader fillBMPshader = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-        mPaint.setShader(fillBMPshader);
+        streetPaint = new Paint();
+        streetPaint.setAntiAlias(true);
+        streetPaint.setColor(Color.BLACK);
+        streetPaint.setStyle(Paint.Style.STROKE);
+        streetPaint.setStrokeWidth(12f);
+
+        linePaint = new Paint();
+        linePaint.setAntiAlias(true);
+        linePaint.setColor(Color.YELLOW);
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setStrokeWidth(1f);
 
 
     }
@@ -88,8 +95,9 @@ public class CanvasView extends View {
         } else {
             //Log.d("OnDraw", "RaceCoordinates empty");
         }
-
-        canvas.drawPath(mPath, mPaint);
+        canvas.drawPath(mPath, borderPaint);
+        canvas.drawPath(mPath, streetPaint);
+        canvas.drawPath(mPath, linePaint);
     }
 
     // when ACTION_DOWN start touch according to the x,y values
