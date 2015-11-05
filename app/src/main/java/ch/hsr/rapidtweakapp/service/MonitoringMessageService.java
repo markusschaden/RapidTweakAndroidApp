@@ -47,7 +47,7 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
             race.add(element);
             sendMessage(RaceChange.ADD, element.getId());
         }
-        Log.i("TrackElementAdded", element.getElementName()+ " ID: " + element.getId());
+        //Log.i("TrackElementAdded", element.getElementName()+ " ID: " + element.getId());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
             sendMessage(RaceChange.ADD, element.getId());
 
         }
-        Log.i("TrackElementAdded", element.getElementName()+ " ID: " + element.getId());
+        //Log.i("TrackElementAdded", element.getElementName()+ " ID: " + element.getId());
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
             race.add(element);
             sendMessage(RaceChange.ADD, element.getId());
         }
-        Log.i("TrackElementAdded", element.getElementName() + " ID: " + element.getId());
+        //Log.i("TrackElementAdded", element.getElementName() + " ID: " + element.getId());
     }
 
     @Override
@@ -84,7 +84,7 @@ public class MonitoringMessageService extends IntentService implements IVisitor{
             race.add(element);
             sendMessage(RaceChange.ADD, element.getId());
         }
-        Log.i("TrackElementAdded", element.getElementName());
+        //Log.i("TrackElementAdded", element.getElementName());
     }
 
     private void sendMessage(RaceChange changeType, int position) {

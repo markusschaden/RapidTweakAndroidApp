@@ -13,11 +13,8 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import java.net.URISyntaxException;
-
 import ch.hsr.rapidtweakapp.R;
 import ch.hsr.rapidtweakapp.fragments.Logger;
-import ch.hsr.rapidtweakapp.websocket.RapidTweakWebSocketClient;
 
 public class Main extends AppCompatActivity implements Logger.OnFragmentInteractionListener {
 
@@ -69,7 +66,7 @@ public class Main extends AppCompatActivity implements Logger.OnFragmentInteract
                         startActivity(new Intent(Main.this, TrackElementsActivity.class));
                         break;
                     case R.id.navigation_item_track:
-                        startActivity(new Intent(Main.this, Track.class));
+                        startActivity(new Intent(Main.this, TrackActivity.class));
                         break;
                     /*case R.id.navigation_item_reservation:
                         if(LibraryService.isLoggedIn())

@@ -49,7 +49,7 @@ public class Application extends android.app.Application {
     }
 
     public boolean connectionStatus(){
-        return connection == null ? false : true;
+        return connection != null;
     }
 
 }

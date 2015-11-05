@@ -7,6 +7,7 @@ import android.util.Log;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Message;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.MonitoringMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PowerMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RaceDrawerMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
@@ -58,7 +59,7 @@ public class RapidTweakWebSocketClient extends WebSocketClient {
                     Intent intent = new Intent(context, MonitoringMessageService.class);
                     intent.putExtra("MonitoringMessage", rawMessage);
                     context.startService(intent);
-                } else if (clazz == StartMessage.class || clazz ==  StopMessage.class || clazz == RoundTimeMessage.class) {
+                } else if (clazz == StartMessage.class || clazz ==  StopMessage.class || clazz == RoundTimeMessage.class || clazz == RaceDrawerMessage.class) {
                     Intent intent = new Intent(context, InformationMessageService.class);
                     intent.putExtra("InformationMessage", rawMessage);
                     context.startService(intent);

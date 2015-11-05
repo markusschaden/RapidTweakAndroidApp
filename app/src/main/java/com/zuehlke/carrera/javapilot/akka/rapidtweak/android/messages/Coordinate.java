@@ -12,7 +12,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class Coordinate{
+public class Coordinate implements Serializable{
 
     double x, y, z;
 

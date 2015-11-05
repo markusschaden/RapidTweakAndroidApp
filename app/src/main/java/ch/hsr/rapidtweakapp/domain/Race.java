@@ -1,5 +1,6 @@
 package ch.hsr.rapidtweakapp.domain;
 
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Coordinate;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.Element;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.track.SpeedMeasureTrackElement;
 
@@ -22,6 +23,8 @@ public class Race {
     private long roundTimeBest = 999999;
     @Setter @Getter
     private Map<Integer, Boolean> collapsed = new HashMap<>();
+    @Setter @Getter
+    private List<Coordinate> raceCoordinantes;
 
 
     public Race() {

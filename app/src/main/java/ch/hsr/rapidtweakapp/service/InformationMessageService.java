@@ -85,6 +85,8 @@ public class InformationMessageService extends IntentService implements IInforma
 
     @Override
     public void visit(RaceDrawerMessage raceDrawerMessage) {
+        Race race = ((Application)this.getApplication()).getRace();
+        race.setRaceCoordinantes(raceDrawerMessage.getTrack());
         Intent intent = new Intent("raceDrawerInformation");
         intent.putExtra("raceDrawerInformation", raceDrawerMessage);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
@@ -92,9 +94,9 @@ public class InformationMessageService extends IntentService implements IInforma
 
     @Override
     public void visit(RacePositionMessage racePositionMessage) {
-        Intent intent = new Intent("racePositionInformation");
+        /*Intent intent = new Intent("racePositionInformation");
         intent.putExtra("racePositionInformation", racePositionMessage);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);*/
 
     }
 

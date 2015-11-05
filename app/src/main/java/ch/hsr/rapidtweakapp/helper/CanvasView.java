@@ -2,13 +2,24 @@ package ch.hsr.rapidtweakapp.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.Coordinate;
+
+import java.util.List;
+
+import ch.hsr.rapidtweakapp.Application;
+import ch.hsr.rapidtweakapp.R;
 
 public class CanvasView extends View {
 
@@ -21,6 +32,9 @@ public class CanvasView extends View {
     private Paint mPaint;
     private float mX, mY;
     private static final float TOLERANCE = 5;
+    private List<Coordinate> raceCoordinantes;
+    private int centerX, centerY;
+    private int scaleFactor = 55;
 
     public CanvasView(Context c, AttributeSet attrs) {
         super(c, attrs);
@@ -32,10 +46,16 @@ public class CanvasView extends View {
         // and we set a new Paint with the desired attributes
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.BLACK);
+//        mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeWidth(4f);
+        mPaint.setStrokeWidth(16f);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.carrera_small);
+        BitmapShader fillBMPshader = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        mPaint.setShader(fillBMPshader);
+
+
     }
 
     // override onSizeChanged
@@ -53,6 +73,22 @@ public class CanvasView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         // draw the mPath with the mPaint on the canvas when onDraw
+
+        centerX = mCanvas.getWidth() / 2;
+        centerY = mCanvas.getHeight() / 2;
+
+
+
+        if(raceCoordinantes != null) {
+            //Log.d("OnDraw", "RaceCoordinates got Data");
+            mPath.moveTo(centerX, centerY);
+            for(Coordinate c : raceCoordinantes) {
+                mPath.lineTo(centerX + ((float)c.getX() * scaleFactor), centerY + ((float)c.getY() * scaleFactor));
+            }
+        } else {
+            //Log.d("OnDraw", "RaceCoordinates empty");
+        }
+
         canvas.drawPath(mPath, mPaint);
     }
 
@@ -85,7 +121,7 @@ public class CanvasView extends View {
     }
 
     //override the onTouchEvent
-    @Override
+    /*@Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
@@ -105,5 +141,13 @@ public class CanvasView extends View {
                 break;
         }
         return true;
+    }*/
+
+
+    public void setRaceCoordinates(List<Coordinate> raceDrawer) {
+        mPath.reset();
+        invalidate();
+        raceCoordinantes = raceDrawer;
+        invalidate();
     }
 }
