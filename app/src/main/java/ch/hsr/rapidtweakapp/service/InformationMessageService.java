@@ -79,6 +79,9 @@ public class InformationMessageService extends IntentService implements IInforma
     public void visit(PenaltyMessage penaltyMessage) {
         Race race = ((Application)this.getApplication()).getRace();
         race.addPenalty(penaltyMessage.getSourceId());
+        Intent intent = new Intent("penaltyInformation");
+        intent.putExtra("penalty", penaltyMessage);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     @Override

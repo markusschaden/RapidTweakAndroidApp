@@ -9,7 +9,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PenaltyMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.state.StateType;
 
 import ch.hsr.rapidtweakapp.R;
@@ -29,6 +31,7 @@ public class StateActivity extends Main {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("stateInformation");
+        filter.addAction("penaltyInformation");
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
     }
 
@@ -44,12 +47,15 @@ public class StateActivity extends Main {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("Broadcast", "State Change Received");
+            //Log.i("Broadcast", "State Change Received");
             if(intent.getSerializableExtra("state") != null) {
                 StateType state = (StateType) intent.getSerializableExtra("state");
                 if(state != null) {
                     changeState(state);
                 }
+            } else if (intent.getSerializableExtra("penalty") != null) {
+                PenaltyMessage penalty = (PenaltyMessage)intent.getSerializableExtra("penalty");
+                Toast.makeText(StateActivity.this, "Penalty occurred on Barrier: " + penalty.getSourceId(), Toast.LENGTH_LONG).show();
             }
         }
     };
