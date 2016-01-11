@@ -7,6 +7,7 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RaceDrawer
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RacePositionMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StateMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
 
 /**
@@ -21,4 +22,5 @@ public interface IInformationVisitor {
     void visit(PowerMessage powerMessage);
     void visit(RaceDrawerMessage raceDrawerMessage);
     void visit(RacePositionMessage racePositionMessage);
+    void visit(StateMessage stateMessage);
 }

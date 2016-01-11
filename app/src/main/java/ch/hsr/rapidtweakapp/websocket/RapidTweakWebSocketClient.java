@@ -10,6 +10,7 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.PowerMessa
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RaceDrawerMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StateMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
 
 import org.java_websocket.client.WebSocketClient;
@@ -55,11 +56,11 @@ public class RapidTweakWebSocketClient extends WebSocketClient {
                 Message rawMessage = serializator.deserialize(data, clazz);
 
                 Log.i("Message", rawMessage.toString());
-                if(clazz == MonitoringMessage.class) {
+                /*if(clazz == MonitoringMessage.class) {
                     Intent intent = new Intent(context, MonitoringMessageService.class);
                     intent.putExtra("MonitoringMessage", rawMessage);
                     context.startService(intent);
-                } else if (clazz == StartMessage.class || clazz ==  StopMessage.class || clazz == RoundTimeMessage.class || clazz == RaceDrawerMessage.class) {
+                } else */if (/*clazz == StartMessage.class || clazz ==  StopMessage.class || clazz == RoundTimeMessage.class || clazz == RaceDrawerMessage.class || */clazz == StateMessage.class) {
                     Intent intent = new Intent(context, InformationMessageService.class);
                     intent.putExtra("InformationMessage", rawMessage);
                     context.startService(intent);

@@ -14,6 +14,7 @@ import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RaceDrawer
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RacePositionMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.RoundTimeMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StartMessage;
+import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StateMessage;
 import com.zuehlke.carrera.javapilot.akka.rapidtweak.android.messages.StopMessage;
 
 import ch.hsr.rapidtweakapp.Application;
@@ -36,10 +37,14 @@ public class InformationMessageService extends IntentService implements IInforma
         Message message;
         if(extras.getSerializable("InformationMessage") != null) {
             message = (Message)extras.getSerializable("InformationMessage");
-            message.accept(this);
+            if(message != null) {
+                message.accept(this);
+            }
         } else if(extras.getSerializable("PowerMessage") != null) {
             message = (Message)extras.getSerializable("PowerMessage");
-            message.accept(this);
+            if(message != null) {
+                message.accept(this);
+            }
         }
 
 
@@ -98,6 +103,13 @@ public class InformationMessageService extends IntentService implements IInforma
         intent.putExtra("racePositionInformation", racePositionMessage);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);*/
 
+    }
+
+    @Override
+    public void visit(StateMessage state){
+        Intent intent = new Intent("stateInformation");
+        intent.putExtra("state", state.getState());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private void sendMessage(RaceInformation information) {
