@@ -15,9 +15,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="State Before"
         android:id="@+id/tv_stateBefore"
+        android:layout_marginTop="32dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,8 +25,18 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Current State"
         android:id="@+id/tv_currentState"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/tv_stateBefore"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_states"
+        android:layout_below="@+id/tv_currentState"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp" />
 
 
 </RelativeLayout>
